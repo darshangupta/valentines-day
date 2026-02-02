@@ -21,6 +21,7 @@ export function ValentineCard() {
   const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const yesButtonRef = useRef<HTMLButtonElement>(null);
+  const noButtonRef = useRef<HTMLButtonElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -75,23 +76,29 @@ export function ValentineCard() {
   }, []);
 
   useEffect(() => {
-    if (isMounted && noButtonPos === null) {
-      setNoButtonPos(getNewSafePosition());
-    }
-  }, [isMounted, noButtonPos, getNewSafePosition]);
-
-  useEffect(() => {
     if (!isMounted) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current || noButtonPos === null) return;
+      if (!containerRef.current) return;
 
       const container = containerRef.current.getBoundingClientRect();
       const mouseX = e.clientX - container.left;
       const mouseY = e.clientY - container.top;
 
-      const buttonCenterX = noButtonPos.x + BUTTON_WIDTH / 2;
-      const buttonCenterY = noButtonPos.y + BUTTON_HEIGHT / 2;
+      let buttonCenterX: number;
+      let buttonCenterY: number;
+
+      if (noButtonPos === null) {
+        // Button is still inline - get its position from the ref
+        const noButton = noButtonRef.current?.getBoundingClientRect();
+        if (!noButton) return;
+        buttonCenterX = noButton.left - container.left + noButton.width / 2;
+        buttonCenterY = noButton.top - container.top + noButton.height / 2;
+      } else {
+        // Button is absolute positioned
+        buttonCenterX = noButtonPos.x + BUTTON_WIDTH / 2;
+        buttonCenterY = noButtonPos.y + BUTTON_HEIGHT / 2;
+      }
 
       const distance = Math.sqrt(
         Math.pow(mouseX - buttonCenterX, 2) + Math.pow(mouseY - buttonCenterY, 2)
@@ -143,6 +150,7 @@ export function ValentineCard() {
 
           {noButtonPos === null ? (
             <Button
+              ref={noButtonRef}
               onClick={handleNoClick}
               onTouchStart={handleNoClick}
               variant="outline"
