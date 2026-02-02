@@ -95,3 +95,57 @@
     min-height: 100vh;
   }
 }
+
+/* Shatter animation keyframes */
+@keyframes shatter-1 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-200px, -150px) rotate(-45deg); opacity: 0; }
+}
+@keyframes shatter-2 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(50px, -200px) rotate(30deg); opacity: 0; }
+}
+@keyframes shatter-3 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(200px, -100px) rotate(60deg); opacity: 0; }
+}
+@keyframes shatter-4 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-180px, 50px) rotate(-30deg); opacity: 0; }
+}
+@keyframes shatter-5 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(0px, 80px) rotate(15deg); opacity: 0; }
+}
+@keyframes shatter-6 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(180px, 80px) rotate(45deg); opacity: 0; }
+}
+@keyframes shatter-7 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-150px, 200px) rotate(-60deg); opacity: 0; }
+}
+@keyframes shatter-8 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(80px, 220px) rotate(25deg); opacity: 0; }
+}
+@keyframes shatter-9 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(220px, 180px) rotate(55deg); opacity: 0; }
+}
+
+.shatter-piece {
+  position: absolute;
+  overflow: hidden;
+  background-size: 300% 300%;
+}
+
+.shatter-1 { animation: shatter-1 1.2s ease-out forwards; clip-path: polygon(0% 0%, 33% 0%, 20% 33%, 0% 25%); background-position: 0% 0%; }
+.shatter-2 { animation: shatter-2 1.1s ease-out forwards; clip-path: polygon(33% 0%, 66% 0%, 50% 33%, 20% 33%); background-position: 50% 0%; }
+.shatter-3 { animation: shatter-3 1.3s ease-out forwards; clip-path: polygon(66% 0%, 100% 0%, 100% 30%, 80% 33%, 50% 33%); background-position: 100% 0%; }
+.shatter-4 { animation: shatter-4 1.15s ease-out forwards; clip-path: polygon(0% 25%, 20% 33%, 25% 66%, 0% 60%); background-position: 0% 50%; }
+.shatter-5 { animation: shatter-5 1.25s ease-out forwards; clip-path: polygon(20% 33%, 50% 33%, 55% 66%, 25% 66%); background-position: 50% 50%; }
+.shatter-6 { animation: shatter-6 1.1s ease-out forwards; clip-path: polygon(50% 33%, 80% 33%, 100% 30%, 100% 65%, 75% 66%, 55% 66%); background-position: 100% 50%; }
+.shatter-7 { animation: shatter-7 1.2s ease-out forwards; clip-path: polygon(0% 60%, 25% 66%, 30% 100%, 0% 100%); background-position: 0% 100%; }
+.shatter-8 { animation: shatter-8 1.3s ease-out forwards; clip-path: polygon(25% 66%, 55% 66%, 60% 100%, 30% 100%); background-position: 50% 100%; }
+.shatter-9 { animation: shatter-9 1.15s ease-out forwards; clip-path: polygon(55% 66%, 75% 66%, 100% 65%, 100% 100%, 60% 100%); background-position: 100% 100%; }

@@ -18,6 +18,8 @@ const PADDING = 20;
 export function ValentineCard() {
   const [noButtonPos, setNoButtonPos] = useState<{ x: number; y: number } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [easterEggFading, setEasterEggFading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const yesButtonRef = useRef<HTMLButtonElement>(null);
@@ -118,6 +120,21 @@ export function ValentineCard() {
     setNoButtonPos(getNewSafePosition());
   };
 
+  const handleYesClick = () => {
+    setShowEasterEgg(true);
+    setEasterEggFading(false);
+    // Start shatter after 1.5 seconds
+    setTimeout(() => {
+      setEasterEggFading(true);
+    }, 1500);
+    // Hide completely and show modal after shatter completes
+    setTimeout(() => {
+      setShowEasterEgg(false);
+      setEasterEggFading(false);
+      setIsModalOpen(true);
+    }, 3000);
+  };
+
   if (!isMounted) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -142,7 +159,7 @@ export function ValentineCard() {
         <div className="flex gap-4 items-center">
           <Button
             ref={yesButtonRef}
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleYesClick}
             className="bg-primary hover:bg-primary/90 text-white text-xl px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
             Yes
@@ -178,6 +195,38 @@ export function ValentineCard() {
         </Button>
       )}
 
+      {showEasterEgg && (
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-1000 ${
+            easterEggFading ? "bg-black/0" : "bg-black/80"
+          }`}
+        >
+          {!easterEggFading ? (
+            <img
+              src="/easter-egg.JPG"
+              alt="Easter egg"
+              className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl animate-in fade-in zoom-in duration-300"
+            />
+          ) : (
+            <div className="relative" style={{ width: "min(90vw, 500px)", height: "min(90vh, 667px)" }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+                <div
+                  key={i}
+                  className={`shatter-piece shatter-${i} rounded-lg`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundImage: "url(/easter-egg.JPG)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="bg-white border-2 border-primary">
           <DialogHeader>
@@ -189,7 +238,7 @@ export function ValentineCard() {
             <DialogDescription className="text-lg text-foreground">
               to dinner at{" "}
               <a
-                href="LINK_PLACEHOLDER"
+                href="https://dirtyhabitdc.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary font-semibold hover:underline"
@@ -198,7 +247,7 @@ export function ValentineCard() {
               </a>
             </DialogDescription>
             <p className="text-lg text-foreground">
-              Then chocolate covered strawberries and espresso martinis
+              Then chocolate covered strawberries (and strawberry palomas)
             </p>
           </div>
         </DialogContent>
