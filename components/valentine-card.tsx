@@ -75,6 +75,12 @@ export function ValentineCard() {
   }, []);
 
   useEffect(() => {
+    if (isMounted && noButtonPos === null) {
+      setNoButtonPos(getNewSafePosition());
+    }
+  }, [isMounted, noButtonPos, getNewSafePosition]);
+
+  useEffect(() => {
     if (!isMounted) return;
 
     const handleMouseMove = (e: MouseEvent) => {
